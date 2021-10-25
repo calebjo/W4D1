@@ -16,6 +16,8 @@ class Board
     @rows[row][col]
   end
 
+
+
   def []=(pos, mark)
     raise "mark already placed there!" unless empty?(pos)
 
