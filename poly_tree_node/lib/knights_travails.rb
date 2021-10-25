@@ -57,28 +57,35 @@ class KnightPathFinder
                 move_tree = PolyTreeNode.new(move)
                 this_pos.add_child(move_tree)
                 # move_tree.parent = this_pos
-                # puts "this node is #{move} This is the parent #{this_pos.value}"
+                puts "this node is #{move} This is the parent #{this_pos.value}"
                 queue << move_tree
                 # debugger
             end
         end
-
+        start_pos
     end
-    
+
+    def find_path(end_pos)
+        start_node = self.build_move_tree
+        start_node.bfs(end_pos)
+    end
+
+
+
+    # def bfs(target_value)
+    #     queue = [self]
+    #     until queue.empty?
+    #         current = queue.shift
+    #         return current if current.value == target_value
+
+    #         current.children.each do |child|
+    #             queue << child
+    #         end
+    #     end
+    #     nil
+    # end
+
 end
 
 k = KnightPathFinder.new([4,4])
-# k.build_move_tree
-
-# def bfs(target_value)
-#     queue = [self]
-#     until queue.empty?
-#         current = queue.shift
-#         return current if current.value == target_value
-
-#         current.children.each do |child|
-#             queue << child
-#         end
-#     end
-#     nil
-# end
+p k.find_path([2,3])
