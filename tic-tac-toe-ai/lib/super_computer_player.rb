@@ -4,24 +4,36 @@ class SuperComputerPlayer < ComputerPlayer
   def move(game, mark)
     node = TicTacToeNode.new(game.board, mark)
 
-    queue = [node]
-    until queue.empty?
-      current = queue.shift
-      return current.prev_move_pos if current.winning_node?(mark)
+    # queue = [node]
+    # until queue.empty?
+    #   current = queue.shift
+    #   return current.prev_move_pos if current.winning_node?(mark)
 
-      node.children.each do |kid|
-        queue << kid
-      end
+
+    #   node.children.each do |kid|
+    #     puts "#{node.children}"
+    #     queue << kid
+
+    #   end
       
-    end
-
-    # kids = node.children
-    # kids.each do |child|
-    #   return child.prev_move_pos if child.winning_node?(mark)
     # end
 
-    kids.select {|child| !child.losing_node?(mark) }.first
-    
+    kids = node.children
+    kids.each do |child|
+      # puts "#{child.prev_move_pos}"
+      return child.prev_move_pos if child.winning_node?(mark)
+      
+      grandkids = child.children
+      grandkids.each do |grandkid|
+        # puts "#{grandkid.prev_move_pos}"
+        return grandkid.prev_move_pos if grandkid.winning_node?(mark)
+      end
+    end
+
+    # end
+
+    # kids.select {|child| !child.losing_node?(mark) }.first
+    raise 'no non-losing nodes'
   end
 end
 
@@ -45,3 +57,5 @@ if __FILE__ == $PROGRAM_NAME
 
   TicTacToe.new(hp, cp).run
 end
+
+
