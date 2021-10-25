@@ -1,15 +1,17 @@
 require_relative 'tic_tac_toe'
 
 class TicTacToeNode
-  attr_reader :board, :next_mover_mark
+  attr_reader :board, :next_mover_mark, :prev_move_pos
   attr_writer :next_mover_mark
 
   def initialize(board, next_mover_mark, prev_move_pos = nil)
     @board = board
     @next_mover_mark = next_mover_mark
+    @prev_move_pos = prev_move_pos
   end
 
   def losing_node?(evaluator)
+    
   end
 
   def winning_node?(evaluator)
@@ -23,12 +25,16 @@ class TicTacToeNode
       row.each_with_index do |ele, j|
         if ele == nil
           pos = [i,j]
-          children << board.dup[pos] = board.next_mover_mark
+          child_board = board.dup
+          child_board[pos] = next_mover_mark
+          next_mover_mark == :x ? next_mover_mark = :o : next_mover_mark = :x 
+          children << TicTacToeNode.new(child_board, next_mover_mark, pos)
         end
       end
     end
     children 
   end
+
 end
 
 
